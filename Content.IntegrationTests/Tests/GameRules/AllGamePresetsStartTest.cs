@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.IntegrationTests.Fixtures;
+using Content.IntegrationTests.Fixtures.Attributes;
 using Content.IntegrationTests.Utility;
 using Content.Server.Antag;
 using Content.Server.Antag.Components;
@@ -19,7 +19,7 @@ using Robust.Shared.Player;
 namespace Content.IntegrationTests.Tests.GameRules;
 
 [TestFixture]
-public sealed class AllGamePresetsStartTest : GameTest
+public sealed class AllGamePresetsStartTest : AntagTest
 {
     /// <summary>
     /// A list of blacklisted <see cref="GamePresetPrototype"/> for this test. Some down streams might make changes which nuke upstream game modes they don't use.
@@ -29,46 +29,31 @@ public sealed class AllGamePresetsStartTest : GameTest
 
     private static string[] _gamePresets = GameDataScrounger.PrototypesOfKind<GamePresetPrototype>().Where(p => !IgnoredPresets.Contains(p)).ToArray();
 
-    public override PoolSettings PoolSettings => new()
-    {
-        Dirty = true,
-        DummyTicker = false,
-        Connected = true,
-        InLobby = true
-    };
-
     // Tests that all game modes can start given ideal circumstances.
     [Test]
     [TestOf(typeof(GameTicker)), TestOf(typeof(AntagSelectionSystem)), TestOf(typeof(AntagSelectionComponent))]
     [TestCaseSource(nameof(_gamePresets))]
     [Description("Ensures all Game Presets are able to start and assign all antags correctly without spawning anyone in nullspace.")]
+    [EnsureCVar(Side.Server, typeof(CCVars), nameof(CCVars.GameTickerIgnoredPresets), GameTicker.DummyGameRule)]
     public async Task TestAllGamemodesCanStart(string presetId)
     {
-        var server = Pair.Server;
-        var client = Pair.Client;
-        var protoMan = server.ProtoMan;
-        var entMan = server.EntMan;
-        var ticker = server.System<GameTicker>();
-        var antagSys = server.System<AntagSelectionSystem>();
-        var mind = server.System<SharedMindSystem>();
-
         // Initially in the lobby
-        Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
-        Assert.That(client.AttachedEntity, Is.Null);
-        Assert.That(ticker.PlayerGameStatuses[client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+        await Server.WaitPost(() =>
+        {
+            Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
+            Assert.That(Client.AttachedEntity, Is.Null);
+            Assert.That(STicker.PlayerGameStatuses[Client.User!.Value], Is.EqualTo(PlayerGameStatus.NotReadyToPlay));
+        });
 
-        // Don't start dummy antag game rule because we want our antags to be predictable for the test.
-        server.CfgMan.SetCVar(CCVars.GameTickerIgnoredPresets, GameTicker.DummyGameRule);
-
-        var preset = protoMan.Index<GamePresetPrototype>(presetId);
+        var preset = SProtoMan.Index<GamePresetPrototype>(presetId);
 
         // Spawn the minimum number of players.
         var players = new List<ICommonSession>();
-        players.Add(client.Session);
+        players.Add(Client.Session);
         var min = 0;
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            min = ticker.GetMinimumPlayerCount(preset);
+            min = STicker.GetMinimumPlayerCount(preset);
         });
 
         // We should already have one client connected, and we need to check the min
@@ -77,18 +62,18 @@ public sealed class AllGamePresetsStartTest : GameTest
         List<(AntagSpecifierPrototype, int)> rules = [];
 
         var antags = 0;
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             foreach (var ruleId in preset.Rules)
             {
-                if (ruleId == GameTicker.DummyGameRule)
+                if (STicker.IsIgnored(ruleId))
                     continue;
 
-                if (!protoMan.Resolve(ruleId, out var rule ))
+                if (!SProtoMan.Resolve(ruleId, out var rule ))
                     continue; // Bruh moment
 
                 // Ignore non-antag game-rules.
-                if (!rule.TryGetComponent<AntagSelectionComponent>(out var antag, entMan.ComponentFactory))
+                if (!rule.TryGetComponent<AntagSelectionComponent>(out var antag, SEntMan.ComponentFactory))
                     continue;
 
                 var runningCount = 0;
@@ -96,10 +81,10 @@ public sealed class AllGamePresetsStartTest : GameTest
                 foreach (var selector in antag.Antags)
                 {
                     // Throw on invalid prototypes, skip roundstart ghost roles.
-                    if (!protoMan.Resolve(selector.Proto, out var definition) || definition.PrefRoles.Count == 0)
+                    if (!SProtoMan.Resolve(selector.Proto, out var definition) || definition.PrefRoles.Count == 0)
                         continue;
 
-                    var count = antagSys.GetTargetAntagCount(selector, min, ref runningCount);
+                    var count = AntagSys.GetTargetAntagCount(selector, min, ref runningCount);
                     antags += count;
                     rules.Add((definition, count));
                 }
@@ -110,7 +95,7 @@ public sealed class AllGamePresetsStartTest : GameTest
         Assert.That(antags <= min, Is.True);
         if (min > 1)
         {
-            var dummies = await server.AddDummySessions(min - 1);
+            var dummies = await Server.AddDummySessions(min - 1);
             // Put our client at the front of the list.
             players = players.Union(dummies).ToList();
         }
@@ -118,9 +103,9 @@ public sealed class AllGamePresetsStartTest : GameTest
         await Pair.RunUntilSynced();
 
         // This also ensures that admin commands work properly :P
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            ticker.ToggleReadyAll(true);
+            STicker.ToggleReadyAll(true);
         });
 
         var i = 0;
@@ -139,41 +124,44 @@ public sealed class AllGamePresetsStartTest : GameTest
         await Pair.RunUntilSynced();
 
         // Game should have started
-        Assert.That(ticker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
-        Assert.That(ticker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
-        Assert.That(ticker.PlayerGameStatuses.Count == players.Count);
-        Assert.That(client.EntMan.EntityExists(client.AttachedEntity));
+        await Server.WaitPost(() =>
+        {
+            Assert.That(STicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
+            Assert.That(STicker.PlayerGameStatuses.Values.All(x => x == PlayerGameStatus.JoinedGame));
+            Assert.That(STicker.PlayerGameStatuses, Has.Count.EqualTo(players.Count));
+        });
+        Assert.That(CEntMan.EntityExists(Client.AttachedEntity));
 
         var player = Pair.Player!.AttachedEntity!.Value;
-        Assert.That(entMan.EntityExists(player));
+        Assert.That(SEntMan.EntityExists(player));
 
         // Start all game presets so antags spawn!
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
-            ticker.StartGamePresetRules();
+            STicker.StartGamePresetRules();
         });
         await Pair.RunUntilSynced();
 
-        await server.WaitPost(() =>
+        await Server.WaitPost(() =>
         {
             var j = 0;
             foreach (var (antag, amount) in rules)
             {
                 for (var count = 0; count < amount; count++)
                 {
-                    AssertAntagInitialized(antag, players[j++]);
+                    SAssertAntagInitialized(antag, players[j++]);
                 }
             }
         });
 
         // Maps now exist
-        Assert.That(entMan.Count<MapComponent>(), Is.GreaterThan(0));
-        Assert.That(entMan.Count<MapGridComponent>(), Is.GreaterThan(0));
-        Assert.That(entMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
+        Assert.That(SEntMan.Count<MapComponent>(), Is.GreaterThan(0));
+        Assert.That(SEntMan.Count<MapGridComponent>(), Is.GreaterThan(0));
+        Assert.That(SEntMan.Count<StationCentcommComponent>(), Is.EqualTo(1));
 
         // Clear game preset and return to lobby
         await Pair.WaitCommand("golobby");
-        ticker.SetGamePreset((GamePresetPrototype) null);
+        STicker.SetGamePreset((GamePresetPrototype) null);
         await Pair.RunUntilSynced();
         void AssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
         {

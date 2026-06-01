@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
@@ -32,6 +31,9 @@ namespace Content.Server.Atmos.EntitySystems
         [Robust.Shared.IoC.Dependency] private IParallelManager _parMan = default!;
         [Robust.Shared.IoC.Dependency] private AtmosphereSystem _atmosphereSystem = default!;
         [Robust.Shared.IoC.Dependency] private ChunkingSystem _chunkingSys = default!;
+
+        [Robust.Shared.IoC.Dependency] private EntityQuery<MapGridComponent> _mapGridQuery = default!;
+        [Robust.Shared.IoC.Dependency] private EntityQuery<GasTileOverlayComponent> _gasTileOverlayQuery = default!;
 
         /// <summary>
         /// Per-tick cache of sessions.
@@ -78,15 +80,10 @@ namespace Content.Server.Atmos.EntitySystems
         private float _updateInterval;
 
         private int _thresholds;
-        private EntityQuery<MapGridComponent> _gridQuery;
-        private EntityQuery<GasTileOverlayComponent> _query;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            _query = GetEntityQuery<GasTileOverlayComponent>();
-            _gridQuery = GetEntityQuery<MapGridComponent>();
 
             _updateJob = new UpdatePlayerJob()
             {
@@ -98,7 +95,7 @@ namespace Content.Server.Atmos.EntitySystems
                 MapManager = _mapManager,
                 ChunkViewerPool = _chunkViewerPool,
                 LastSentChunks = _lastSentChunks,
-                GridQuery = _gridQuery,
+                GridQuery = _mapGridQuery,
             };
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
@@ -157,7 +154,7 @@ namespace Content.Server.Atmos.EntitySystems
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Invalidate(Entity<GasTileOverlayComponent?> grid, Vector2i index)
         {
-            if (_query.Resolve(grid.Owner, ref grid.Comp))
+            if (_gasTileOverlayQuery.Resolve(grid.Owner, ref grid.Comp))
                 grid.Comp.InvalidTiles.Add(index);
         }
 
