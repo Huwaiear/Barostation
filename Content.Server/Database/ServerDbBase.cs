@@ -1635,6 +1635,7 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         {
             await using var db = await GetDb();
 
+            // Добавить проверку на существование, чтобы избежать дублей
             var exists = await db.DbContext.AchievementPlayers
                 .AnyAsync(a => a.UserId == userId.UserId && a.AchievementId == achievementId);
 

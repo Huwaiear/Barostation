@@ -163,44 +163,5 @@ public sealed class AllGamePresetsStartTest : AntagTest
         await Pair.WaitCommand("golobby");
         STicker.SetGamePreset((GamePresetPrototype) null);
         await Pair.RunUntilSynced();
-        void AssertAntagInitialized(AntagSpecifierPrototype antag, ICommonSession session)
-        {
-            Assert.That(mind.TryGetMind(session, out var mindEnt, out var mindComp),
-                $"Session {session} spawned into the game as an antag but had no mind!");
-            Assert.That(entMan.EntityExists(mindComp!.CurrentEntity),
-                $"Session {session} spawned into the game as an antag, but had no entity!");
-            var ent = mindComp.CurrentEntity!.Value;
-
-            // We don't necessarily know if an antag should spawn on the station, but we know they shouldn't spawn in nullspace.
-            var xform = SEntMan.GetComponent<TransformComponent>(ent);
-            Assert.That(xform.MapUid, Is.Not.Null);
-            Assert.That(xform.MapID, Is.Not.EqualTo(MapId.Nullspace));
-
-            // Make sure all components were added
-            foreach (var comp in antag.Components)
-            {
-                Assert.That(entMan.HasComponent(ent, comp.Value.Component.GetType()),
-                    $"Entity {entMan.ToPrettyString(ent)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
-            }
-
-            // Make sure all mind components were added
-            foreach (var comp in antag.MindComponents)
-            {
-                Assert.That(entMan.HasComponent(mindEnt, comp.Value.Component.GetType()),
-                    $"Mind {entMan.ToPrettyString(mindEnt)} owned by {session} failed to acquire {comp.Key} component, while becoming {antag.ID}");
-            }
-
-            if (antag.MindRoles != null)
-            {
-                Assert.Multiple(() =>
-                {
-                    foreach (var role in antag.MindRoles)
-                    {
-                        Assert.That(mindComp!.MindRoleContainer.ContainedEntities.Any(x => entMan.MetaQuery.Comp(x).EntityPrototype?.ID == role),
-                            $"{SToPrettyString(mindEnt)} owned by {session}, failed to acquire role {role} for antagonist {antag}");
-                    }
-                });
-            }
-        }
     }
 }

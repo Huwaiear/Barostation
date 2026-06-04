@@ -5,7 +5,7 @@ namespace Content.Shared._BaroStation.Achievements;
 /// <summary>
 /// Компонент для прототипа достижения, определяющий условия его получения
 /// </summary>
-[Prototype("achievementCondition")]
+[Prototype] // Убрано явное указание "achievementCondition"
 public sealed partial class AchievementConditionPrototype : IPrototype
 {
     [IdDataField]
