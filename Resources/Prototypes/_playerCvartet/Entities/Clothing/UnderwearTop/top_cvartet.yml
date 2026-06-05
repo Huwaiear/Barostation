@@ -1,0 +1,203 @@
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraLatexBra
+  name: Латексный бюст
+  description: Латексный бюст, скрипучий и возбуждающий!
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/latex_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBraMaidBra
+  name: Бюст горничной
+  description: Бархатный бюстгальтер хорни-горничной, уверен ты хочешь стать одной из них...
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/maid_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopLatexTop
+  name: Латексный топик
+  description: Обтягивающий латексный топик, он отлично подчеркивает грудь.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/latex_top.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopRedBikini
+  name: Красный бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/red_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBlackBikini
+  name: Черный бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/black_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopGreenBikini
+  name: Зеленый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/green_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopWhiteBikini
+  name: Белый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/white_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopBlueBikini
+  name: Синий бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/blue_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopPinkBikini
+  name: Розовый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/pink_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopPurpleBikini
+  name: Фиолетовый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/purple_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopTurquoiseBikini
+  name: Бирюзовый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/turquoise_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearTopBase
+  id: ClothingUnderwearTopYellowBikini
+  name: Желтый бюст бикини
+  description: Отличная вещь для плавания, хорошо устойчива к намоканию(В отличии от вас).
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearTop/yellow_bikini_bra.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right

@@ -1,0 +1,37 @@
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsMaidSleeves
+  name: Нарукавники горничной
+  description: Оу... это выглядит интересно. Их можно использовать по разному.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/HandsGloves/maid_sleeves.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/HandsGloves/maid_sleeves.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 0
+
+- type: entity
+  parent: ClothingHandsButcherable
+  id: ClothingHandsBlackBracelet
+  name: Черный браслет
+  description: Черный резиновый браслетик, которого почти не видно.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/HandsGloves/black_bracelet.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/HandsGloves/black_bracelet.rsi
+  - type: Fiber
+    fiberMaterial: fibers-synthetic
+    fiberColor: fibers-black
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 0

@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBunnyEarsCvartet
+  name: Ушки девочки-зайка
+  description: Милые ушки того самого хорни-образа девочки зайки! Надев их, ты можешь сполна ощутить себя ей!
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/HeadHat/bunny_ears.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/HeadHat/bunny_ears.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMaidCap
+  name: Чепчик горничной
+  description: Идеальный элемент одежды, что бы все считали вас милой горничной!
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/HeadHat/maid_cap.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/HeadHat/maid_cap.rsi

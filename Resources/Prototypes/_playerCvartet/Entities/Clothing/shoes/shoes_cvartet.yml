@@ -1,0 +1,38 @@
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesDarkShoesBunnyGirl
+  name: Тёмные туфли
+  description: Тёмные туфли девочки зайки, они престижно смотреться на ваших ножках!
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/shoes/darkshoesbunnygirl.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/shoes/darkshoesbunnygirl.rsi
+  - type: Matchbox
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesMaidSandals
+  name: Сандали горничной
+  description: Аккуратные и милые сандальки для послушной горничной! Ты же хочешь прислуживать хозяину?
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/shoes/maid_sandals.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/shoes/maid_sandals.rsi
+  - type: Matchbox
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesAnkleBoots
+  name: Черные берцы
+  description: Мощная боевая обувь, что она забыла в этом наборе?
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/shoes/ankle_boots.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/shoes/ankle_boots.rsi
+  - type: Matchbox
