@@ -1,0 +1,47 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLatexJacket
+  name: Латексный пиджак
+  description: "Ой... почему у него открытая грудь?!"
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/outer/Latex_jacket.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/outer/Latex_jacket.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMaidDress
+  name: Престижный костюм горничной
+  description: Элегантный костюм горничной с черным сердечком на фартуке.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/outer/maid_dress.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/outer/maid_dress.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatMaidApron
+  name: Фартук горничной
+  description: Миленький фартук горничной, как то мало он прикрывает...
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/outer/maid_apron.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/outer/maid_apron.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLeatherJacket
+  name: Кожаная куртка
+  description: Брутальная кожаная крутка, она очень круто выглядит на тебе, хорошо подчеркивает твои формы.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/outer/leather_jacket.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/outer/leather_jacket.rsi

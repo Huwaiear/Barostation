@@ -4,7 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared._BaroStation.Achievements;
 
-[Prototype("achievement")]
+[Prototype] // Убрано явное указание "achievement"
 public sealed partial class AchievementPrototype : IPrototype
 {
     [IdDataField]

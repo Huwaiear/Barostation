@@ -1,4 +1,5 @@
 using Content.Server.Database;
+using Content.Server.GameTicking;
 using Content.Shared._BaroStation.Achievements;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Damage.Components;
@@ -7,6 +8,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -19,7 +21,9 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;
     [Dependency] private IServerDbManager _dbManager = default!;
+    [Dependency] private ILogManager _logManager = default!;
 
+    private ISawmill _sawmill = default!;
     private Dictionary<NetUserId, HashSet<string>> _playerAchievements = new();
     public static AchievementsServerSystem? Instance { get; private set; }
 
@@ -28,10 +32,18 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
         base.Initialize();
         Instance = this;
 
+        _sawmill = _logManager.GetSawmill("achievements.server");
+
         SubscribeNetworkEvent<RequestAchievementsMessage>(OnRequestAchievements);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
         SubscribeLocalEvent<GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(OnDamageChanged);
+
+        // Подписываемся на подключение игрока
+        SubscribeNetworkEvent<PlayerConnectMsg>(OnPlayerConnect);
+
+        // Отправляем достижения при входе в лобби
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
     }
 
     public override void Shutdown()
@@ -41,10 +53,26 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
         _playerAchievements.Clear();
     }
 
+    private async void OnPlayerConnect(PlayerConnectMsg msg, EntitySessionEventArgs args)
+    {
+        var session = args.SenderSession;
+        if (session == null)
+            return;
+
+        await LoadAchievementsAsync(session.UserId);
+        await SendAchievementsToClient(session);
+    }
+
+    private async void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
+    {
+        await SendAchievementsToClient(ev.PlayerSession);
+    }
+
     private async void OnPlayerSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
         await LoadAchievementsAsync(ev.Player.UserId);
         await SendAchievementsToClient(ev.Player);
+
         var achievementComp = EnsureComp<PlayerAchievementsComponent>(ev.Mob);
         if (_playerAchievements.TryGetValue(ev.Player.UserId, out var earned))
             achievementComp.EarnedAchievements = earned;
@@ -57,7 +85,10 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
             var earnedIds = await _dbManager.GetPlayerAchievementsAsync(userId);
             _playerAchievements[userId] = new HashSet<string>(earnedIds);
         }
-        catch (Exception) { }
+        catch (Exception ex)
+        {
+            _sawmill.Error($"Failed to load achievements for {userId}: {ex.Message}");
+        }
     }
 
     public override bool HasAchievement(NetUserId userId, string achievementId)
@@ -75,8 +106,10 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
         var prototypeId = MetaData(args.Equipment).EntityPrototype?.ID;
         if (string.IsNullOrEmpty(prototypeId))
             return;
+
         if (TryComp<MaskComponent>(args.Equipment, out var mask) && mask.IsToggled)
             return;
+
         foreach (var achievement in _prototypeManager.EnumeratePrototypes<AchievementPrototype>())
         {
             if (achievementComp.EarnedAchievements.Contains(achievement.ID))
@@ -156,25 +189,41 @@ public sealed partial class AchievementsServerSystem : SharedAchievementsSystem
             if (!_playerAchievements.ContainsKey(userId))
                 _playerAchievements[userId] = new HashSet<string>();
             _playerAchievements[userId].Add(achievementId);
+
             RaiseNetworkEvent(new AchievementEarnedMessage { AchievementId = achievementId }, actor.PlayerSession);
             RaiseNetworkEvent(new AchievementsStateMessage { EarnedIds = component.EarnedAchievements.ToList() }, actor.PlayerSession);
         }
     }
 
-    private void OnRequestAchievements(RequestAchievementsMessage msg, EntitySessionEventArgs args)
+    private async void OnRequestAchievements(RequestAchievementsMessage msg, EntitySessionEventArgs args)
     {
-        _ = SendAchievementsToClient(args.SenderSession);
+        var session = args.SenderSession;
+        if (session == null)
+            return;
+
+        await LoadAchievementsAsync(session.UserId);
+        await SendAchievementsToClient(session);
     }
 
     private async Task SendAchievementsToClient(ICommonSession session)
     {
         try
         {
-            var earnedIds = await _dbManager.GetPlayerAchievementsAsync(session.UserId);
-            RaiseNetworkEvent(new AchievementsStateMessage { EarnedIds = earnedIds.ToList() }, session);
+            if (!_playerAchievements.ContainsKey(session.UserId))
+            {
+                await LoadAchievementsAsync(session.UserId);
+            }
+
+            var earnedIds = _playerAchievements.GetValueOrDefault(session.UserId, new HashSet<string>());
+            var message = new AchievementsStateMessage { EarnedIds = earnedIds.ToList() };
+
+            _sawmill.Info($"Sending achievements to {session.Name}: {earnedIds.Count} earned");
+
+            RaiseNetworkEvent(message, session);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _sawmill.Error($"Failed to send achievements to {session.Name}: {ex.Message}");
             RaiseNetworkEvent(new AchievementsStateMessage { EarnedIds = new List<string>() }, session);
         }
     }

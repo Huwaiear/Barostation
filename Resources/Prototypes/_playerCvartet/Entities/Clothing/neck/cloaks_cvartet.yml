@@ -1,0 +1,19 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMaidArmlet
+  name: Нарукавники горничной с наплечниками
+  description: Почему они отдельно?
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/neck/maid_armlet.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckHarness
+  name: Обвязка
+  description: Обвязка вокруг шеи? Пу-пу-пу... Дергать не стоит, лишь нежно притягивать.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/neck/harness.rsi

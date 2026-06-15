@@ -1,0 +1,16 @@
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearSocksBase
+  id: ClothingUnderwearSocksMaidStockings
+  name: Чулки горничной
+  description: Обтягивающие чулочки престижной горничной, что отлично подчеркивают стройные ножки
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearSocks/maid_stockings.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right

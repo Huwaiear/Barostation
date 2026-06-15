@@ -636,7 +636,7 @@ public partial class AtmosphereSystem
 
     public void SetTileMixtureInternal(EntityUid gridUid, Vector2i indices, GasMixture mixture)
     {
-        if (!_atmosQuery.TryGetComponent(gridUid, out var gridAtmos))
+        if (!_gridAtmosQuery.TryGetComponent(gridUid, out var gridAtmos))
             return;
 
         if (!gridAtmos.Tiles.TryGetValue(indices, out var tile))

@@ -1,0 +1,23 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformHornyPants
+  name: Хорни-штаны
+  description: Штаны с вырезом на пикантных местах. Интересно... зачем это?
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/uniform/Horny_pants.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/uniform/Horny_pants.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformTightPants
+  name: Обтягивающие джинсы
+  description: Черные обтягивающие джинсы, они отлично подчеркивают ваш роскошный зад.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/uniform/tight_pants.rsi
+  - type: Clothing
+    sprite: c.v.a.r.t.e.t.t/uniform/tight_pants.rsi

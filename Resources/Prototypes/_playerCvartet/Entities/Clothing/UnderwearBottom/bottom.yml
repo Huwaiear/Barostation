@@ -1,0 +1,186 @@
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomLatexPanties
+  name: Латексные трусики
+  description: Латексные обтягивающие трусики для тех, кто хочет удивить!
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/latex_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomMaidThong
+  name: Стринги горничной
+  description: Сексуальное бархатное белье хорни-горничной... Удачи тебе, я уверен она тебе понадобиться...
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/maid_thong.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomRedBikiniPanties
+  name: Красные трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/red_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomGreenBikiniPanties
+  name: Зеленые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/green_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomWhiteBikiniPanties
+  name: Белые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/white_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPinkBikiniPanties
+  name: Розовые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/pink_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBlueBikiniPanties
+  name: Синие трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/blue_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomPurpleBikiniPanties
+  name: Фиолетовые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/purple_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomYellowBikiniPanties
+  name: Желтые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/yellow_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomTurquoiseBikiniPanties
+  name: Бирюзовые трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/turquoise_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right
+
+- type: entity
+ # Inherits from ADT Team's base code. In-hand visuals added by Cvartet.
+  parent: ClothingUnderwearBottomBase
+  id: ClothingUnderwearBottomBlackBikiniPanties
+  name: Черные трусики-бикини
+  description: Они кажутся слишком обтягивающими, кажется ваш роскошный зад слишком сильно выделяется.
+  suffix: Cvartet
+  components:
+  - type: Sprite
+    sprite: c.v.a.r.t.e.t.t/UnderwearBottom/black_bikini_panties.rsi
+  - type: InHandVisuals
+    inHandVisuals:
+      Left:
+      - state: inhand-left
+      Right:
+      - state: inhand-right

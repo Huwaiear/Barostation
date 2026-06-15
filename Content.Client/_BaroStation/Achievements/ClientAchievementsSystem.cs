@@ -17,6 +17,20 @@ public partial class ClientAchievementsSystem : SharedAchievementsSystem, IAchie
 
         var uiManager = IoCManager.Resolve<IUserInterfaceManager>();
         _uiController = uiManager.GetUIController<AchievementsUIController>();
+
+        // Отправляем сигнал о подключении клиента
+        var netManager = IoCManager.Resolve<IClientNetManager>();
+        netManager.ClientConnectStateChanged += OnClientConnectStateChanged;
+    }
+
+    private void OnClientConnectStateChanged(ClientConnectionState state)
+    {
+        if (state == ClientConnectionState.Connected)
+        {
+            // Отправляем серверу сигнал, что клиент подключился
+            var msg = new PlayerConnectMsg();
+            EntityManager.EventBus.RaiseEvent(EventSource.Network, msg);
+        }
     }
 
     public override void Shutdown()
