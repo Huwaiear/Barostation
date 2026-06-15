@@ -10,21 +10,11 @@
   - type: Item
     size: Tiny
   - type: Clothing
-    slots: SOCKS
   - type: Butcherable
     butcheringType: Knife
     spawned:
     - id: MaterialCloth1
       amount: 1
-  #- type: Food
-  #  requiresSpecialDigestion: true
- # - type: SolutionContainerManager
- #   solutions:
-  #    food:
-  #      maxVol: 10
-   #     reagents:
-     #   - ReagentId: Fiber
-    #      Quantity: 10
   - type: StaticPrice
     price: 10
   - type: Tag
